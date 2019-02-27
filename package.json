@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-chat-app",
+  "version": "1.0.0",
+  "description": "A simple chat app using Socket.IO",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShuqinL/NodeJS-chat-app.git"
+  },
+  "author": "Shuqin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShuqinL/NodeJS-chat-app/issues"
+  },
+  "homepage": "https://github.com/ShuqinL/NodeJS-chat-app#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.16",
+    "socket.io": "^2.2.0"
+  }
+}
