@@ -22,13 +22,14 @@
                 <div id="chat">
                     <input type="text" id="username" class="form-control" placeholder="Enter name...">
                     <br>
+                    <div id="feedback"></div>
                     <div class="card">
                         <div id="messages" class="card-block">
 
                         </div>
                     </div>
                     <br>
-                    <textarea id="textarea" class="form-control" placeholder="Enter message..."></textarea>
+                    <input type="text" id="textarea" class="form-control" placeholder="Enter message...">
                 </div>
             </div>
         </div>
@@ -47,6 +48,7 @@
             let textarea = element("textarea");
             let username = element("username");
             let clearBtn = element("clear");
+            let feedback = element("feedback");
 
             //set default status
             let statusDefault = status.textContent;
@@ -72,6 +74,10 @@
                 //handle output
                 socket.on("output", function(data){
                     //console.log(data);
+                    //make typing message disappear when user stops typing
+                    feedback.innerHTML = "";
+
+
                     if(data.length){
                         for(var x = 0; x < data.length; x++){
                             //build out message div
@@ -98,7 +104,7 @@
 
                 //handle input
                 textarea.addEventListener("keydown", function(event){
-                    if(event.which  === 13 && event.shiftkey == false){
+                    if(event.which  === 13 /* && event.shiftkey == false*/){
                         //emit to server input
                         socket.emit("input", {
                             name: username.value,
@@ -116,6 +122,15 @@
                 //clear message
                 socket.on("cleared", function(){
                     messages.textContent = "";
+                });
+
+                //handle typing message
+                textarea.addEventListener("keypress", function(){
+                    socket.emit("typing", username.value);
+                });
+
+                socket.on("typing", function(data){
+                    feedback.innerHTML = "<p><em>" + data + "is typing a message...</em></p>";
                 });
  
 

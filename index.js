@@ -1,8 +1,22 @@
 const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
 const bodyParser = require("body-parser");
 
 const mongo = require("mongodb").MongoClient;
-const client = require("socket.io").listen(4000).sockets;
+//const client = require("socket.io").listen(4000).sockets;
+const client = require("socket.io").listen(server);
+server.listen(process.env.PORT || 4000);
+
+app.get("/", function(req, res){
+    res.sendFile(__dirname + "/index.html");
+});
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+
 
 //connect to mongo
 //let url ="mongodb://mymongouser:hellomongouser123@rnc-shard-00-00-6vzo0.mongodb.net:27017,rnc-shard-00-01-6vzo0.mongodb.net:27017,rnc-shard-00-02-6vzo0.mongodb.net:27017/chat-app?ssl=true&replicaSet=RNC-shard-0&authSource=admin&retryWrites=true";
@@ -62,5 +76,12 @@ mongo.connect(url, {useNewUrlParser: true},function(err,db){
                 socket.emit("cleared");
             });
         });
+
+        //handle typing message
+        socket.on("typing", function(data){
+            socket.broadcast.emit("typing", data);
+        });
+
+
     });
 });
