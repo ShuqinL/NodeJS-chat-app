@@ -16,7 +16,8 @@ app.get("/", function(req, res){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-
+users = [];
+connections = [];
 
 //connect to mongo
 //let url ="mongodb://mymongouser:hellomongouser123@rnc-shard-00-00-6vzo0.mongodb.net:27017,rnc-shard-00-01-6vzo0.mongodb.net:27017,rnc-shard-00-02-6vzo0.mongodb.net:27017/chat-app?ssl=true&replicaSet=RNC-shard-0&authSource=admin&retryWrites=true";
@@ -30,6 +31,16 @@ mongo.connect(url, {useNewUrlParser: true},function(err,db){
 
     //connect to Socket.io
     client.on("connection", function(socket){
+        //count the connections
+        /* connections.push(socket);
+        console.log("Connected: %s sockets connected", connections.length); */
+        
+     /*    socket.on("disconnect", function(data){
+            connections.splice(connections.indexOf(socket), 1);
+            console.log("Disconnected: %s sockets connected", connections.length);
+        }); */
+       
+
         let chat = db.db("chat-app").collection("chats");
         
         //create function to send status

@@ -13,7 +13,12 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="col-md-2 offset-md-1 col-sm-2" style="padding-top:60px">
+                 <h5>Online Users</h5>
+                 <ul class="list-group" id="users"></ul>
+            </div>
+
+            <div class="col-md-6 col-sm-8">
                 <h1 class="text-center">
                     MongoChat
                     <button id="clear" class="btn btn-danger">Clear</button>
@@ -32,10 +37,14 @@
                     <input type="text" id="textarea" class="form-control" placeholder="Enter message...">
                 </div>
             </div>
+
+            <div class="col-md-2 col-sm-2">
+
+            </div>
         </div>
     </div>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
     <script>
          (function(){
